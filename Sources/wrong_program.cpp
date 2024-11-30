@@ -1,33 +1,48 @@
 #include <iostream> 
 using namespace std;
- 
-int main(void){
-    long long X;
-    cin>>X;
-    long long temp;
-    long long horse;
-    long long k;
 
-    for(int i=1;i<10000001;i++){
-    
-        if((i*(i+1)/2) > X){
-            temp=X-(i-1)*i/2;
-            horse=i%2;
-            k=i;
-            break;
+
+
+int main(void){
+    int N;
+    cin>>N;
+    int count=1;
+    int num[N];
+    int temp[N]={0};
+    int i=0;
+    int t=1;
+
+    for(int i=0;i<N;i++)
+        cin>> num[i];
+
+    while(count != N+1){
+        if(num[i]==count){
+            count++;
+            i++;
         }
+        else if(temp[t-1]==count){
+            temp[t-1]=0;
+            t--;
+            count++;
+            
+            }
+        else {           
+            
+            temp[t]=num[i];
+            i++;
+            t++;
+            
+        }
+        if(t>1){
+                if(temp[t-1]<temp[t]){
+                    cout<<"Sad";
+                    
+                    return 0;
+                    }
+            }
     }
-    if(X==1)
-        cout<<"1/1";
-    else if(X==2)
-        cout<<"1/2";
-    else if(X==3)
-        cout<<"2/1";
-    else if(horse==0){
-        cout<<temp<<"/"<<k-temp+1;
-    }
-    else
-        cout<<k-temp+1<<"/"<<temp;
-        
+    cout<<"Nice";
+
+
     return 0;
 }

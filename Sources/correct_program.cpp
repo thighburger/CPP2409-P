@@ -1,24 +1,48 @@
 #include <iostream> 
 using namespace std;
- 
+
+
+
 int main(void){
-    long long X;
-    cin>>X;
-    int temp;
-    int a;
-    for(int i=0;i<100000;i++)
-        if((i+1)*(i+2)/2>=X){
-            temp=i+1;
-            a=X-i*(i+1)/2;
-            break;
+    int N;
+    cin>>N;
+    int count=1;
+    int num[1000]={0};
+    int temp[1000]={0};
+    int i=0;
+    int t=1;
+
+    for(int i=0;i<N;i++)
+        cin>> num[i];
+
+    while(count != N){
+        if(num[i]==count){
+            count++;
+            i++;
         }
-    
-    if(X==1)
-        cout<<"1/1";
-    else if(temp%2==0)
-        cout<<a<<"/"<<temp+1-a;
-    else
-        cout<<temp+1-a<<"/"<<a;
-    
+        else if(temp[t-1]==count){
+            temp[t-1]=0;
+            t--;
+            count++;
+            
+            }
+        else {           
+            
+            temp[t]=num[i];
+            i++;
+            t++;
+            
+        }
+        if(t>1){
+                if(temp[t-1]<temp[t]){
+                    cout<<"Sad";
+                    
+                    return 0;
+                    }
+            }
+    }
+    cout<<"Nice";
+
+
     return 0;
 }
