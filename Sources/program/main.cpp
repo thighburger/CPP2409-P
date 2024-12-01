@@ -20,7 +20,7 @@ string runProgram(const string& filename, const string& input) {
 
     string result;
     char buffer[128];
-    while (fgets(buffer, sizeof(buffer), pipe) != nullptr) {
+    while (fgets(buffer, sizeof(buffer), pipe) != nullptr) { 
         result += buffer;
     }
 
