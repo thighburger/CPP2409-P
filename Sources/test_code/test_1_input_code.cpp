@@ -3,14 +3,13 @@
 #include <ctime>
 #include <vector>
 #include <algorithm>
+#include <random> 
 
 using namespace std;
 
 int main() {
-    
-    srand(time(0));
+    srand(time(0)); 
 
-    
     int N = rand() % 10 + 1; 
     cout << N << endl;
 
@@ -19,8 +18,11 @@ int main() {
         students.push_back(i);  
     }
 
-    
-    random_shuffle(students.begin(), students.end());
+
+    random_device rd;  
+    mt19937 gen(rd()); 
+    shuffle(students.begin(), students.end(), gen);
+
     for (int i = 0; i < N; ++i) {
         cout << students[i] << " ";  
     }
@@ -28,3 +30,4 @@ int main() {
 
     return 0;
 }
+

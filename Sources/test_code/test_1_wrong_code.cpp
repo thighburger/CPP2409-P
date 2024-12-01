@@ -7,21 +7,21 @@ int main(void){
     int N;
     cin>>N;
     int count=1;
-    int num[1000]={0};
-    int temp[1000]={0};
+    int num[N];
+    int temp[N]={0};
     int i=0;
     int t=1;
 
     for(int i=0;i<N;i++)
         cin>> num[i];
 
-    while(count != N){
+    while(count != N+1){
         if(num[i]==count){
             count++;
             i++;
         }
         else if(temp[t-1]==count){
-            temp[t-1]=0;
+            temp[t]=0;
             t--;
             count++;
             
@@ -46,4 +46,3 @@ int main(void){
 
     return 0;
 }
-
