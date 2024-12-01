@@ -3,7 +3,6 @@
 #include <string>
 #include <cstdlib>
 #include <sstream>
-#include <limits>
 
 using namespace std;
 
@@ -67,9 +66,9 @@ void setupPrograms() {
     cout << "1. 올바른 코드 입력" << endl;
     cout << "2. 잘못된 코드 입력" << endl;
     cout << "3. 입력 생성기 코드 입력" << endl;
-    cout << "선택: " << flush;
+    cout << "선택: ";
     cin >> choice;
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');  // 버퍼 초기화
+    cin.ignore();
 
     if (choice == 1) {
         cout << "올바른 코드의 내용을 입력하세요. (종료하려면 'done' 입력): " << endl;
@@ -98,31 +97,27 @@ void setupPrograms() {
     }
 
     writeCodeToFile(code, filename);
-    string compileCommand = "g++ " + filename + " -o " + filename.substr(0, filename.find('.')) + ".exe > compile_log.txt 2>&1";
-    int result = system(compileCommand.c_str());
-    if (result != 0) {
-        cout << "컴파일 실패. 로그 파일(compile_log.txt)을 확인하세요." << endl;
-    } else {
-        cout << "코드 설정 및 컴파일 완료!" << endl;
-    }
+    string compileCommand = "g++ " + filename + " -o " + filename.substr(0, filename.find('.')) + ".exe";
+    system(compileCommand.c_str());
+    cout << "코드 설정 및 컴파일 완료!" << endl;
 }
 
 // 반례 찾기 함수
 void findCounterexample() {
     int testCount;
-    cout << "테스트 반복 횟수를 입력하세요: " << flush;
+    cout << "테스트 반복 횟수를 입력하세요: ";
     cin >> testCount;
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');  // 버퍼 초기화
+    cin.ignore();
 
     for (int i = 0; i < testCount; ++i) {
         string input = generateInput();
-        cout << "생성된 입력:\n" << input << flush;
+        cout << "생성된 입력:\n" << input << endl;
 
         string correctOutput = runProgram("correct_program.exe", input);
         string wrongOutput = runProgram("wrong_program.exe", input);
 
         if (correctOutput != wrongOutput) {
-            cout << "\n반례 발견!" << endl;
+            cout << "반례 발견!" << endl;
             cout << "입력값:\n" << input << endl;
             cout << "올바른 코드 출력: " << correctOutput << endl;
             cout << "잘못된 코드 출력: " << wrongOutput << endl;
@@ -135,18 +130,18 @@ void findCounterexample() {
 
 int main() {
     while (true) {
-        cout << "\n메뉴:" << endl;
+        cout << "메뉴:" << endl;
         cout << "1. 프로그램 설정" << endl;
         cout << "2. 반례 찾기" << endl;
         cout << "3. 종료" << endl;
-        cout << "선택: " << flush;
-
+        cout << "선택: ";
         int choice;
         cin >> choice;
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');  // 버퍼 초기화
+        cin.ignore();
 
         if (choice == 1) {
             setupPrograms();
+            break;
         } else if (choice == 2) {
             findCounterexample();
         } else if (choice == 3) {
@@ -159,7 +154,5 @@ int main() {
 
     return 0;
 }
-
-
 
 
