@@ -4,11 +4,10 @@
 #include <cstdlib>
 #include <sstream>
 #include <filesystem>
-#include <vector>
-#include <algorithm>
 
 using namespace std;
-namespace fs = std::filesystem;
+
+
 
 // 주어진 코드 내용을 파일에 작성하는 함수
 void writeCodeToFile(const string& code, const string& filename) {
@@ -20,6 +19,8 @@ void writeCodeToFile(const string& code, const string& filename) {
         cout << filename << " 파일을 열 수 없습니다!" << endl;
     }
 }
+
+
 
 // 프로그램 실행 함수
 string runProgram(const string& filename, const string& input) {
@@ -130,8 +131,7 @@ void findCounterexample() {
     cout << "반례를 찾지 못했습니다." << endl;
 }
 
-// 파일 복사 함수
-void copy(string &sourceFile, string &destinationFile) {
+void copy(string &sourceFile,string &destinationFile){
     // 원본 파일 열기
     ifstream source(sourceFile, ios::in);
     if (!source) {
@@ -151,64 +151,27 @@ void copy(string &sourceFile, string &destinationFile) {
     // 파일 닫기
     source.close();
     destination.close();
+    
 }
 
-// 기존 파일 불러오기 함수
 void loadExistingFiles() {
     int Number;
-    cout << "문제 번호를 입력해 주세요: ";
-    cin >> Number;
-    string basePath = "..\\baek\\" + to_string(Number);
-    
-    // 문제 번호 디렉토리 확인
-    if (!fs::exists(basePath) || !fs::is_directory(basePath)) {
-        cout << "저장된 문제가 아닙니다." << endl;
-        return;
-    }
+    cout<<"문제 번호를 입력해 주세요: ";
+    cin>>Number;
 
-    string sourceFile = "..\\baek\\" + to_string(Number) + "\\baek_" + to_string(Number) + "_wrong_code.cpp";  
+    string sourceFile = "..\\baek\\"+to_string(Number)+"\\baek_"+to_string(Number)+"_wrong_code.cpp";  
     string destinationFile = "wrong_program.cpp";  
-    copy(sourceFile, destinationFile);
+    copy(sourceFile,destinationFile);
 
-    sourceFile = "..\\baek\\" + to_string(Number) + "\\baek_" + to_string(Number) + "_correct_code.cpp";  
+    sourceFile = "..\\baek\\"+to_string(Number)+"\\baek_"+to_string(Number)+"_correct_code.cpp";  
     destinationFile = "correct_program.cpp"; 
-    copy(sourceFile, destinationFile);
+    copy(sourceFile,destinationFile);
 
-    sourceFile = "..\\baek\\" + to_string(Number) + "\\baek_" + to_string(Number) + "_input_code.cpp";  
+    sourceFile = "..\\baek\\"+to_string(Number)+"\\baek_"+to_string(Number)+"_input_code.cpp";  
     destinationFile = "input_generator.cpp"; 
-    copy(sourceFile, destinationFile);
+    copy(sourceFile,destinationFile);
 
     cout << "불러오기가 완료되었습니다." << endl;
-}
-
-// 문제 파일 목록을 오름차순으로 정렬하여 나열하는 함수
-void listProblemFiles() {
-    string path = "..\\baek\\";
-    vector<int> problemNumbers;
-
-    cout << "문제 파일 목록:" << endl;
-
-    // 디렉토리 탐색
-    for (const auto& entry : fs::directory_iterator(path)) {
-        if (fs::is_directory(entry)) {
-            string dirName = entry.path().filename().string();
-            try {
-                int problemNumber = stoi(dirName);  // 디렉토리 이름을 정수로 변환
-                problemNumbers.push_back(problemNumber);
-            } catch (const invalid_argument& e) {
-                // 디렉토리 이름이 숫자가 아닐 경우 무시
-                continue;
-            }
-        }
-    }
-
-    // 문제 번호 오름차순으로 정렬
-    sort(problemNumbers.begin(), problemNumbers.end());
-
-    // 정렬된 문제 번호 출력
-    for (const auto& problem : problemNumbers) {
-        cout << "문제 번호: " << problem << endl;
-    }
 }
 
 int main() {
@@ -218,8 +181,7 @@ int main() {
         cout << "2. 기존 파일 불러오기" << endl;
         cout << "3. 반례 찾기" << endl;
         cout << "4. 컴파일" << endl;
-        cout << "5. 저장된 문제 목록 보기" << endl;
-        cout << "6. 종료" << endl;
+        cout << "5. 종료" << endl;
 
         cout << "선택: ";
         int choice;
@@ -242,8 +204,6 @@ int main() {
             cout << "컴파일 완료!" << endl;
             break;
         } else if (choice == 5) {
-            listProblemFiles();
-        } else if (choice == 6) {
             cout << "프로그램을 종료합니다." << endl;
             break;
         } else {
@@ -253,12 +213,6 @@ int main() {
 
     return 0;
 }
-
-
-
-
-
-
 
 
 

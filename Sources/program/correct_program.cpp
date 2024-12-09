@@ -1,31 +1,47 @@
-#include <iostream>
-
-#define endl "\n"
-#define fastio() ios::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
-
+#include <iostream> 
 using namespace std;
 
-int n, k;
 
-//@@@ @@ 1 @@ @@@
-int bitCount(int x){
-    if(x == 0) return 0;
-    return x % 2 + bitCount(x/2);
-}
+int main(void){
+    int N;
+    cin>>N;
+    int count=1;
+    int num[1000]={0};
+    int temp[1000]={0};
+    int i=0;
+    int t=1;
 
-void solve(){
-    for(int i =0;;i++){
-        //pp 1 pp pppp kpp ppp ppp kpp pppp pppp ppp pp pp
-        if(bitCount(n) <= k){
-            cout << i;
-            return ;
+    for(int i=0;i<N;i++)
+        cin>> num[i];
+
+    while(count != N){
+        if(num[i]==count){
+            count++;
+            i++;
         }
-        n++;
+        else if(temp[t-1]==count){
+            temp[t-1]=0;
+            t--;
+            count++;
+            
+            }
+        else {           
+            
+            temp[t]=num[i];
+            i++;
+            t++;
+            
+        }
+        if(t>1){
+                if(temp[t-1]<temp[t]){
+                    cout<<"Sad";
+                    
+                    return 0;
+                    }
+            }
     }
-}
+    cout<<"Nice";
 
-int main(){
-    fastio();
-    cin >> n >> k;
-    solve();
+
+    return 0;
 }
