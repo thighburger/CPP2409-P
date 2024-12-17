@@ -71,10 +71,12 @@ void setupPrograms() {
     cout << "1. 올바른 코드 입력" << endl;
     cout << "2. 잘못된 코드 입력" << endl;
     cout << "3. 입력 생성기 코드 입력" << endl;
+    cout << "0. 뒤로가기" << endl;
     cout << "선택: ";
     cin >> choice; // 사용자 선택 입력
     cin.ignore(); // 입력 버퍼 비우기
 
+    if (choice == 0) return; // 뒤로가기
     if (choice == 1) {
         cout << "올바른 코드의 내용을 입력하세요. (종료하려면 'done' 입력): " << endl;
     } else if (choice == 2) {
@@ -108,9 +110,10 @@ void setupPrograms() {
 // 반례 찾기 함수 (무작위 입력 생성 및 두 프로그램의 출력 비교)
 void findCounterexample() {
     int testCount;
-    cout << "테스트 반복 횟수를 입력하세요: ";
+    cout << "테스트 반복 횟수를 입력하세요 (0 입력 시 뒤로가기): ";
     cin >> testCount; // 테스트 횟수 입력
     cin.ignore(); // 입력 버퍼 비우기
+    if (testCount == 0) return;
 
     for (int i = 0; i < testCount; ++i) {
         string input = generateInput(); // 입력 생성
@@ -155,10 +158,11 @@ void copy(string &sourceFile, string &destinationFile) {
 // 기존 파일 불러오기 함수
 void loadExistingFiles() {
     int Number;
-    cout << "문제 번호를 입력해 주세요: ";
+    cout << "문제 번호를 입력해 주세요 (0 입력 시 뒤로가기): ";
     cin >> Number; // 문제 번호 입력
     string basePath = "..\\baek\\" + to_string(Number); // 문제 파일 경로 생성
 
+    if (Number == 0) return;
     // 문제 번호 디렉토리 확인
     if (!fs::exists(basePath) || !fs::is_directory(basePath)) {
         cout << "저장된 문제가 아닙니다." << endl;
@@ -229,10 +233,11 @@ string readFile(const string& filename) {
 // 코드 저장 함수 
 void saveExistingPrograms() {
     int problemNumber;
-    cout << "저장할 문제 번호를 입력하세요: ";
+    cout << "저장할 문제 번호를 입력하세요(0 입력 시 뒤로가기기): ";
     cin >> problemNumber; // 문제 번호 입력
     cin.ignore(); // 입력 버퍼 비우기
 
+    if (problemNumber==0) return;
     string basePath = "..\\baek\\" + to_string(problemNumber); // 저장 경로 생성
 
     // 디렉토리 생성 (존재하지 않을 경우)
@@ -277,10 +282,45 @@ void saveExistingPrograms() {
     cout << "모든 코드 저장이 완료되었습니다." << endl;
 }
 
+// 도움말 출력 함수
+void showHelp() {
+    cout << "\n======== 프로그램 도움말 ========" << endl;
+    cout << "1. 프로그램 설정" << endl;
+    cout << "   - 올바른 코드, 잘못된 코드, 입력 생성기 코드를 입력합니다." << endl;
+    cout << "   - 입력이 끝나면 'done'을 입력하여 종료합니다." << endl;
+    cout << "   - 모든 코드를 작성하였다면 컴파일을 해주세요." << endl;
+
+    cout << "\n2. 기존 파일 불러오기" << endl;
+    cout << "   - 이미 저장된 문제 번호를 입력하면 해당 문제의 코드가 불러와집니다." << endl;
+    cout << "   - 불러오기 후후 컴파일을 해주세요." << endl;
+
+    cout << "\n3. 반례 찾기" << endl;
+    cout << "   - 입력 생성기를 통해 무작위 입력을 생성하고" << endl;
+    cout << "     두 프로그램의 출력을 비교하여 반례를 찾습니다." << endl;
+
+    cout << "\n4. 컴파일" << endl;
+    cout << "   - 작성한 코드를 g++ 컴파일러를 통해 실행 파일로 컴파일합니다." << endl;
+
+    cout << "\n5. 저장된 문제 목록 보기" << endl;
+    cout << "   - 저장된 문제의 번호를 오름차순으로 나열합니다." << endl;
+
+    cout << "\n6. 저장하기" << endl;
+    cout << "   - 현재 작성된 올바른 코드, 잘못된 코드, 입력 생성기 코드를" << endl;
+    cout << "     특정 문제 번호의 폴더에 저장합니다." << endl;
+
+    cout << "\n7. 종료" << endl;
+    cout << "   - 프로그램을 종료합니다." << endl;
+
+    cout << "\n8. 도움말 보기" << endl;
+    cout << "   - 이 도움말을 출력합니다." << endl;
+
+    cout << "==================================" << endl;
+}
 
 int main() {
+    cout<<"*******주의사항:모든 코드를 작성하였다면 컴파일을 해주세요.(불러오기도 마찬가지)*******"<<endl;
     while (true) {
-        cout << "메뉴:" << endl;
+        cout << "\n\n메뉴:" << endl;
         cout << "1. 프로그램 설정" << endl;
         cout << "2. 기존 파일 불러오기" << endl;
         cout << "3. 반례 찾기" << endl;
@@ -288,6 +328,7 @@ int main() {
         cout << "5. 저장된 문제 목록 보기" << endl;
         cout << "6. 저장하기" << endl; 
         cout << "7. 종료" << endl;
+        cout << "8. 도움말" << endl;
 
         cout << "선택: ";
         int choice;
@@ -317,6 +358,8 @@ int main() {
         } else if (choice == 7) {
             cout << "프로그램을 종료합니다." << endl;
             break; // 프로그램 종료
+        } else if (choice == 8) {
+            showHelp(); // 도움말 출력
         } else {
             cout << "잘못된 선택입니다. 다시 시도하세요." << endl;
         }

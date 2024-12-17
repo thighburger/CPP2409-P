@@ -4,6 +4,7 @@
         "iosfwd": "cpp",
         "string": "cpp",
         "format": "cpp",
-        "stdexcept": "cpp"
+        "stdexcept": "cpp",
+        "ostream": "cpp"
     }
 }
